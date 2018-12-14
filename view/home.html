@@ -1,0 +1,44 @@
+<html>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<script>
+var app = angular.module('myApp',[]);
+app.controller('myCtrl',function($scope){
+	var rawData = "<%=data %>";
+	rawData = rawData.replace(/(\r\n|\n|\r)/gm,"").replace(/&#34;/g, '"');
+	$scope.data =JSON.parse(rawData);
+});
+</script>
+
+
+<body ng-app='myApp'>
+<div ng-controller='myCtrl'>
+
+<table class='table'>
+
+	<tr>
+		<th>Email</th>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Conf Password</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<tr ng-repeat='info in data'>
+		<td ng-bind='info.email'/>
+		<td ng-bind='info.username'/>
+		<td ng-bind='info.password'/>
+		<td ng-bind='info.confpassword'/>
+		<td><a ng-href='/edit?username={{info.username}}&password={{info.password}}&confpassword={{info.confpassword}}?email={{info.email}}'>Edit</td>
+		<td><a ng-href='/delete?username={{info.username}}&password={{info.password}}'>Delete</td>
+	</tr>
+</table>
+
+</div>
+</body>
+
+
+</html>
+
